@@ -37,7 +37,7 @@ class ExpenseTracker:
         self.expenses.append(expense)
 
     def viewExpenses(self):
-        print("'Expense lists'".center(width))
+        print("\t---'Expense lists'----")
         # Displays all recorded expenses.
         for expenses in self.expenses:
             print(expenses)
@@ -55,15 +55,21 @@ class ExpenseTracker:
         for name,obj in self.categories.items():
             print(f"{name}\t\t${obj.budget}\t${obj.total_spent}\n")
     def saveFile(self,filename):
-        with open(filename,'w') as f:
-            expense = [expense.__dict__ for expense in self.expenses]
-            json.dump(expense,f)
+        try:
+            with open(filename,'w') as f:
+                expense = [expense.__dict__ for expense in self.expenses]
+                json.dump(expense,f)
+        except:
+            print("Something went wrong! Please try again.")
     def loadFile(self,filename):
-        with open(filename,'r') as f:
-            exp_list = json.load(f)
-            for exp_dict in exp_list:
-                exp_obj = Expense(**exp_dict)  #unpacking the dictionary
-                self.expenses.append(exp_obj)
+        try:
+            with open(filename,'r') as f:
+                exp_list = json.load(f)
+                for exp_dict in exp_list:
+                    exp_obj = Expense(**exp_dict)  #unpacking the dictionary
+                    self.expenses.append(exp_obj)
+        except:
+            print("Something went wrong! Please try again.")
 
 #menu function for user interection
 def menu():
